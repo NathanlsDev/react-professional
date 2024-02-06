@@ -16,6 +16,7 @@
 
   <body>
     <div id="root"></div>
+    <div id="shell"></div>
 
     <script
       crossorigin
@@ -25,10 +26,10 @@
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
     ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script>
       const createElement = React.createElement;
-
       ReactDOM.render(
         createElement(
           "h1",
@@ -42,8 +43,17 @@
             "Hello React!"
           )
         ),
-
         document.getElementById("root")
+      );
+    </script>
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <h1 className="title">
+          Hello Shell!
+          <small className="subTitle"> Hello React!</small>
+        </h1>,
+        document.getElementById("shell")
       );
     </script>
   </body>
