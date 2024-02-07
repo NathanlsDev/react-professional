@@ -19,7 +19,7 @@ const Calculator = () => {
   );
 };
 
-function App() {
+const App = () => {
   return (
     <div>
       <Header />
