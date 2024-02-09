@@ -48,3 +48,11 @@ button {
   padding: 8px;
   cursor: pointer;
 }
+
+.span2{
+  grid-column: span 2;
+}
+.primary{
+  background-color: #ffeec2;
+  color: #c49023;
+}

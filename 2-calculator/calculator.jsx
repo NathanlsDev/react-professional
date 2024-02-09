@@ -1,23 +1,33 @@
 const Header = () => <div className="hearder">Calculator</div>;
 
-const Button = (props) => (
+const Button = ({ value, onClick, className }) => (
   <button
     onClick={() => {
-      props.onNumberClick(props.value);
+      onClick(value);
     }}
+    className={className}
   >
-    {props.value}
+    {value}
   </button>
 );
 
 const Calculator = () => {
-  const keyPadNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+  const keyPadNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."];
   const [display, setDisplay] = React.useState("");
 
   const generateButtonNumbers = () =>
-    keyPadNumbers.map((number, index) => (
-      <Button value={number} key={index} onNumberClick={handleNumberClicked} />
-    ));
+    keyPadNumbers.map((keyPad, index) => {
+      return (
+        <Button
+          className={
+            (keyPad === "." && "primary") || (keyPad === 0 && "span2") || ""
+          }
+          value={keyPad}
+          key={index}
+          onClick={handleNumberClicked}
+        />
+      );
+    });
 
   const handleNumberClicked = (value) => {
     setDisplay(display + value);
