@@ -1,20 +1,32 @@
-const Header = () => <div class="hearder">Calculator</div>;
+const Header = () => <div className="hearder">Calculator</div>;
+
+const Button = (props) => (
+  <button
+    onClick={() => {
+      props.onNumberClick(props.value);
+    }}
+  >
+    {props.value}
+  </button>
+);
+
 const Calculator = () => {
+  const keyPadNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+  const [display, setDisplay] = React.useState("");
+
+  const generateButtonNumbers = () =>
+    keyPadNumbers.map((number, index) => (
+      <Button value={number} key={index} onNumberClick={handleNumberClicked} />
+    ));
+
+  const handleNumberClicked = (value) => {
+    setDisplay(display + value);
+  };
+
   return (
-    <div class="calculator">
-      <div class="display"></div>
-      <div class="keyboard">
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>0</button>
-      </div>
+    <div className="calculator">
+      <div className="display">{display}</div>
+      <div className="keyboard">{generateButtonNumbers()}</div>
     </div>
   );
 };
@@ -26,6 +38,6 @@ const App = () => {
       <Calculator />
     </div>
   );
-}
+};
 
 ReactDOM.render(<App />, document.getElementById("root"));
