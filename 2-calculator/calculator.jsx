@@ -12,26 +12,34 @@ const Button = ({ value, onClick, className }) => (
 );
 
 const Calculator = () => {
-  const keyPadNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0, "."];
+  const keyPadNumbers = [
+    7, 8, 9, "/", "",
+    4, 5, 6, "*", "",
+    1, 2, 3, "-", "",
+    0, ".", "+", "="
+  ];
+
   const [display, setDisplay] = React.useState("");
 
   const generateButtonNumbers = () =>
     keyPadNumbers.map((keyPad, index) => {
+      const span2Class = keyPad === 0 ? "span2" : "";
+      const primaryClass = isNaN(keyPad) ? "primary" : "";
+
       return (
         <Button
-          className={
-            (keyPad === "." && "primary") || (keyPad === 0 && "span2") || ""
-          }
+          className={`${span2Class}${primaryClass}`}
           value={keyPad}
           key={index}
-          onClick={handleNumberClicked}
+          onClick={handleClick}
         />
       );
     });
 
-  const handleNumberClicked = (value) => {
-    setDisplay(display + value);
-  };
+  const handleClick = (value) => value === "=" 
+    ? setDisplay(eval(display)) 
+    : setDisplay(display + value);
+  ;
 
   return (
     <div className="calculator">
