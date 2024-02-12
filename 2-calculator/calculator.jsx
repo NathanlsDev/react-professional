@@ -13,10 +13,10 @@ const Button = ({ value, onClick, className }) => (
 
 const Calculator = () => {
   const keyPadNumbers = [
-    7, 8, 9, "/", "",
-    4, 5, 6, "*", "",
-    1, 2, 3, "-", "",
-    0, ".", "+", "="
+    7,  8,  9,  "/",  "C",
+    4,  5,  6,  "*",  "Del",
+    1,  2,  3,  "-",  "",
+    0,  ".",  "+",  "=",
   ];
 
   const [display, setDisplay] = React.useState("");
@@ -36,10 +36,17 @@ const Calculator = () => {
       );
     });
 
-  const handleClick = (value) => value === "=" 
-    ? setDisplay(eval(display)) 
-    : setDisplay(display + value);
-  ;
+  const handleClick = (value) => {
+    const actions = {
+      "=": () => setDisplay(eval(display)),
+      C: () => setDisplay(""),
+      Del: () => setDisplay(display.slice(0, -1)),
+      default: () => setDisplay(`${display}${value}`),
+    };
+
+    const action = actions[value] || actions["default"];
+    action();
+  };
 
   return (
     <div className="calculator">
