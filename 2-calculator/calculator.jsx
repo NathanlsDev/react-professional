@@ -1,3 +1,5 @@
+const calcRegex = /^([0-9]|-|\+|\*|\/|\.)*$/;
+
 const Header = () => <div className="hearder">Calculator</div>;
 
 const Button = ({ value, onClick, className }) => (
@@ -19,6 +21,18 @@ const Calculator = () => {
     0,  ".",  "+",  "=",
   ];
 
+  const handleClick = (value) => {
+    const actions = {
+      "=": () => setDisplay(eval(display)),
+      C: () => setDisplay(""),
+      Del: () => setDisplay(display.slice(0, -1)),
+      default: () => setDisplay(`${display}${value}`),
+    };
+
+    const action = actions[value] || actions["default"];
+    action();
+  };
+
   const [display, setDisplay] = React.useState("");
 
   const generateButtonNumbers = () =>
@@ -36,21 +50,19 @@ const Calculator = () => {
       );
     });
 
-  const handleClick = (value) => {
-    const actions = {
-      "=": () => setDisplay(eval(display)),
-      C: () => setDisplay(""),
-      Del: () => setDisplay(display.slice(0, -1)),
-      default: () => setDisplay(`${display}${value}`),
-    };
-
-    const action = actions[value] || actions["default"];
-    action();
-  };
-
   return (
     <div className="calculator">
-      <div className="display">{display}</div>
+      <input
+        type="text"
+        className="display"
+        value={display}
+        onChange={event => {
+          const { value } = event.target;
+          if (calcRegex.test(value)) {
+            setDisplay(event.target.value);
+          }
+        }}
+      />
       <div className="keyboard">{generateButtonNumbers()}</div>
     </div>
   );
