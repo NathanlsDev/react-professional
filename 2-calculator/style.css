@@ -2,6 +2,17 @@
   box-sizing: border-box;
 }
 
+.title{
+  display: flex;
+  color: cyan;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
 body {
   margin: 0;
   background-color: #121212;

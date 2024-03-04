@@ -1,6 +1,6 @@
 const calcRegex = /^([0-9]|-|\+|\*|\/|\.)*$/;
 
-const Header = () => <div className="hearder">Calculator</div>;
+const Header = () => <div className="hearder title">Calculator</div>;
 
 const Button = ({ value, onClick, className }) => (
   <button
@@ -14,17 +14,20 @@ const Button = ({ value, onClick, className }) => (
 );
 
 const Calculator = () => {
-  const keyPadNumbers = [
+  const keyPad = [
     7,  8,  9,  "/",  "C",
     4,  5,  6,  "*",  "Del",
     1,  2,  3,  "-",  "",
     0,  ".",  "+",  "=",
   ];
 
+  const doTheMath = () => setDisplay(eval(display));
+  const clearDisplay = () => setDisplay("");
+
   const handleClick = (value) => {
     const actions = {
-      "=": () => setDisplay(eval(display)),
-      C: () => setDisplay(""),
+      "=": () => doTheMath(),
+      C: () => clearDisplay(),
       Del: () => setDisplay(display.slice(0, -1)),
       default: () => setDisplay(`${display}${value}`),
     };
@@ -36,7 +39,7 @@ const Calculator = () => {
   const [display, setDisplay] = React.useState("");
 
   const generateButtonNumbers = () =>
-    keyPadNumbers.map((keyPad, index) => {
+    keyPad.map((keyPad, index) => {
       const span2Class = keyPad === 0 ? "span2" : "";
       const primaryClass = isNaN(keyPad) ? "primary" : "";
 
@@ -56,10 +59,18 @@ const Calculator = () => {
         type="text"
         className="display"
         value={display}
-        onChange={event => {
+        onChange={(event) => {
           const { value } = event.target;
           if (calcRegex.test(value)) {
             setDisplay(event.target.value);
+          }
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            doTheMath();
+          }
+          if (event.code === "KeyC") {
+            clearDisplay();
           }
         }}
       />
